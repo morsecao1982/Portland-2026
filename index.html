@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>西北太平洋之旅 · Jul 18–26, 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,900&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --spruce:#16332C;
+  --spruce-soft:#274A41;
+  --mist:#F1F5F3;
+  --card:#FFFFFF;
+  --glacier:#2F7A6F;
+  --glacier-dark:#215A52;
+  --ferry:#B5432E;
+  --flight:#3F5B8C;
+  --ink:#1D2A26;
+  --sub:#5B6E68;
+  --line:#D8E2DE;
+  --gold:#C99B3F;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Public Sans',system-ui,sans-serif;background:var(--mist);color:var(--ink);line-height:1.55}
+
+/* ---------- HERO ---------- */
+.hero{background:var(--spruce);color:#EDF3F0;padding:64px 24px 56px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:56px;
+  background:
+    linear-gradient(135deg, transparent 49%, var(--spruce-soft) 50%) 0 0/28px 56px repeat-x,
+    linear-gradient(225deg, transparent 49%, var(--spruce-soft) 50%) 14px 0/28px 56px repeat-x;
+  opacity:.5}
+.hero-inner{max-width:880px;margin:0 auto}
+.hero .kicker{font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:#9CC4B8;margin-bottom:14px}
+.hero h1{font-family:'Fraunces',serif;font-weight:900;font-size:clamp(34px,6vw,58px);line-height:1.08;letter-spacing:-.01em}
+.hero h1 em{font-style:italic;color:#A9D3C6}
+.hero .route{margin-top:22px;font-family:'IBM Plex Mono',monospace;font-size:14px;color:#C5DAD2;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}
+.hero .route span.arrow{color:#5F8377}
+.hero .meta{margin-top:26px;display:flex;flex-wrap:wrap;gap:10px}
+.hero .chip{border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:6px 14px;font-size:13px;color:#DCEAE4}
+
+/* ---------- LAYOUT ---------- */
+main{max-width:880px;margin:0 auto;padding:40px 20px 80px}
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:44px}
+.toc a{text-decoration:none;font-size:13px;font-weight:600;color:var(--glacier-dark);background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 14px;transition:.15s}
+.toc a:hover{background:var(--glacier);color:#fff;border-color:var(--glacier)}
+
+/* ---------- DAY ---------- */
+.day{margin-bottom:56px}
+.day-head{display:flex;align-items:baseline;gap:14px;margin-bottom:6px;flex-wrap:wrap}
+.day-num{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;letter-spacing:.14em;color:var(--glacier-dark);text-transform:uppercase}
+.day h2{font-family:'Fraunces',serif;font-weight:700;font-size:clamp(24px,3.6vw,32px);color:var(--spruce)}
+.day-sub{color:var(--sub);font-size:15px;margin-bottom:22px}
+
+/* timeline spine */
+.tl{position:relative;padding-left:34px}
+.tl::before{content:"";position:absolute;left:11px;top:8px;bottom:8px;width:2px;background:var(--line)}
+.slot{position:relative;margin-bottom:14px}
+.slot::before{content:"";position:absolute;left:-29px;top:14px;width:12px;height:12px;border-radius:50%;background:#fff;border:3px solid var(--glacier)}
+.slot.ferry::before{border-color:var(--ferry)}
+.slot.flight::before{border-color:var(--flight)}
+.slot.hotel::before{border-color:var(--gold)}
+.slot-card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.slot .time{font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:600;color:var(--glacier-dark);letter-spacing:.04em}
+.slot.ferry .time{color:var(--ferry)}
+.slot.flight .time{color:var(--flight)}
+.slot .title{font-weight:700;font-size:16.5px;margin:2px 0 4px;color:var(--spruce)}
+.slot .desc{font-size:14.5px;color:var(--sub)}
+.slot .desc b{color:var(--ink)}
+
+/* nav pill */
+.navlink{display:inline-flex;align-items:center;gap:6px;margin-top:10px;margin-right:8px;text-decoration:none;font-size:13px;font-weight:600;color:#fff;background:var(--glacier);border-radius:999px;padding:7px 14px;transition:.15s}
+.navlink:hover{background:var(--glacier-dark)}
+.navlink svg{flex:none}
+.navlink.alt{background:#fff;color:var(--glacier-dark);border:1.5px solid var(--glacier)}
+.navlink.alt:hover{background:var(--mist)}
+
+/* ---------- TICKET (reservation) ---------- */
+.ticket{background:var(--card);border:1px solid var(--line);border-radius:12px;margin-top:12px;overflow:hidden;position:relative}
+.ticket-top{padding:13px 18px 11px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}
+.ticket-top .label{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--sub)}
+.ticket-top .vendor{font-weight:700;font-size:15px;color:var(--spruce)}
+.ticket-body{border-top:1.5px dashed var(--line);padding:12px 18px 14px;display:flex;flex-wrap:wrap;gap:8px 26px;font-size:13.5px;position:relative}
+.ticket-body::before,.ticket-body::after{content:"";position:absolute;top:-7px;width:14px;height:14px;border-radius:50%;background:var(--mist);border:1px solid var(--line)}
+.ticket-body::before{left:-8px}
+.ticket-body::after{right:-8px}
+.kv{min-width:120px}
+.kv .k{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--sub);margin-bottom:1px}
+.kv .v{font-weight:600}
+.kv .v.mono{font-family:'IBM Plex Mono',monospace;font-size:14px;color:var(--spruce)}
+.ticket a.mng{font-size:12.5px;font-weight:600;color:var(--glacier-dark)}
+.tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;border-radius:5px;padding:3px 8px}
+.tag.ferry{background:#F6E4DF;color:var(--ferry)}
+.tag.flight{background:#E2E8F4;color:var(--flight)}
+.tag.hotel{background:#F4EAD3;color:#8A6A1F}
+.tag.car{background:#DFEDE9;color:var(--glacier-dark)}
+
+/* note */
+.note{background:#FBF6E8;border:1px solid #EADFC0;border-radius:10px;padding:12px 16px;font-size:13.5px;color:#6E5A22;margin-top:12px}
+.note b{color:#4E3F14}
+
+footer{background:var(--spruce);color:#9CBDB2;text-align:center;padding:30px 20px;font-size:13px}
+footer .mono{font-family:'IBM Plex Mono',monospace}
+
+@media (max-width:560px){
+  .tl{padding-left:26px}
+  .tl::before{left:8px}
+  .slot::before{left:-24px;width:10px;height:10px}
+  .ticket-body{gap:8px 18px}
+}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="kicker">Family Trip · July 18 – 26, 2026</div>
+    <h1>西北太平洋<br>公路<em>环线</em></h1>
+    <div class="route">DCA <span class="arrow">✈</span> Seattle <span class="arrow">→</span> Vancouver <span class="arrow">→</span> Victoria <span class="arrow">⛴</span> Olympic NP <span class="arrow">→</span> Portland <span class="arrow">✈</span> BWI</div>
+    <div class="meta">
+      <span class="chip">🚗 Budget 全尺寸 · SEA取 PDX还</span>
+      <span class="chip">⛴ 2段轮渡</span>
+      <span class="chip">🏨 4晚已订</span>
+      <span class="chip">👨‍👩‍👦 2大1小（回程4人）</span>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<nav class="toc">
+  <a href="#d1">7/18 抵达西雅图</a>
+  <a href="#d2">7/19 温哥华 Day 1</a>
+  <a href="#d3">7/20 温哥华 Downtown</a>
+  <a href="#d4">7/21 维多利亚</a>
+  <a href="#d5">7/22 Olympic NP</a>
+  <a href="#d6">7/23 去波特兰</a>
+  <a href="#d7">7/26 回程</a>
+</nav>
+
+<!-- ================= DAY 1 ================= -->
+<section class="day" id="d1">
+  <div class="day-head"><span class="day-num">Day 1 · Sat</span><h2>7/18 华盛顿 → 西雅图</h2></div>
+  <p class="day-sub">下午航班，落地取车，直接入住。</p>
+  <div class="tl">
+
+    <div class="slot flight">
+      <div class="slot-card">
+        <div class="time">4:35 PM → 7:41 PM (PT)</div>
+        <div class="title">✈ Delta DL786 · DCA → SEA</div>
+        <div class="desc">直飞 6h06m · Delta Main Basic · 座位见值机</div>
+        <div class="ticket">
+          <div class="ticket-top">
+            <span><span class="tag flight">Flight</span>&nbsp; <span class="vendor">Delta / Capital One Travel</span></span>
+            <a class="mng" href="https://www.delta.com/mytrips/" target="_blank">Delta 管理行程 ↗</a>
+          </div>
+          <div class="ticket-body">
+            <div class="kv"><div class="k">Delta 确认码</div><div class="v mono">GXXF7N</div></div>
+            <div class="kv"><div class="k">Capital One</div><div class="v mono">H-WDXLOW</div></div>
+            <div class="kv"><div class="k">乘客</div><div class="v">Yuanyuan Liu · Miao Cao · Isaac Cao</div></div>
+            <div class="kv"><div class="k">已付</div><div class="v">$730.20（73,020里程）</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slot">
+      <div class="slot-card">
+        <div class="time">8:30 PM</div>
+        <div class="title">🚗 SEA机场取车 · Budget</div>
+        <div class="desc">全尺寸（Toyota Camry同级）· 自动挡 · 不限里程 · <b>需出示Costco会员卡</b></div>
+        <div class="ticket">
+          <div class="ticket-top">
+            <span><span class="tag car">Rental Car</span>&nbsp; <span class="vendor">Budget · via Costco Travel</span></span>
+            <a class="mng" href="https://www.costcotravel.com/myAccount" target="_blank">Costco Travel 账户 ↗</a>
+          </div>
+          <div class="ticket-body">
+            <div class="kv"><div class="k">Costco 确认号</div><div class="v mono">C489254891</div></div>
+            <div class="kv"><div class="k">Budget 确认号</div><div class="v mono">44583603US1</div></div>
+            <div class="kv"><div class="k">取车</div><div class="v">7/18 8:30pm · SEA机场 (206-444-7510)</div></div>
+            <div class="kv"><div class="k">还车</div><div class="v">7/26 8:30pm · PDX机场 (971-319-3041)</div></div>
+            <div class="kv"><div class="k">柜台付</div><div class="v">$936.52</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slot hotel">
+      <div class="slot-card">
+        <div class="time">~9:30 PM Check-in</div>
+        <div class="title">🏨 Residence Inn Seattle Northgate Station</div>
+        <div class="desc">Studio · 2 Queen + 沙发床 · 停车 $30/晚</div>
+        <a class="navlink" href="https://www.google.com/maps/dir/?api=1&origin=Seattle-Tacoma+International+Airport&destination=Residence+Inn+by+Marriott+Seattle+Northgate+Station" target="_blank">🧭 SEA机场 → 酒店导航</a>
+        <div class="ticket">
+          <div class="ticket-top">
+            <span><span class="tag hotel">Hotel</span>&nbsp; <span class="vendor">Marriott Bonvoy</span></span>
+            <a class="mng" href="https://www.marriott.com/reservation/lookupReservation.mi" target="_blank">Marriott 查看预订 ↗</a>
+          </div>
+          <div class="ticket-body">
+            <div class="kv"><div class="k">确认号</div><div class="v mono">80741893</div></div>
+            <div class="kv"><div class="k">入住/退房</div><div class="v">7/18 3pm → 7/19 12pm</div></div>
+            <div class="kv"><div class="k">免费取消</div><div class="v">至 7/16 23:59</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= DAY 2 ================= -->
+<section class="day" id="d2">
+  <div class="day-head"><span class="day-num">Day 2 · Sun</span><h2>7/19 西雅图 → 温哥华 · 自驾游玩日</h2></div>
+  <p class="day-sub">路线自南向北顺行：Richmond早茶 → Stanley Park → Granville Island → English Bay → 海底捞 → 入住，全程不走回头路。</p>
+  <div class="tl">
+
+    <div class="slot">
+      <div class="slot-card">
+        <div class="time">6:30 AM 出发</div>
+        <div class="title">🚗 北上过境（~2.5h + 边检预留1h）</div>
+        <div class="desc">走 I-5 北上，Peace Arch 口岸过境。<b>带好全员护照。</b></div>
+        <a class="navlink" href="https://www.google.com/maps/dir/?api=1&origin=Residence+Inn+by+Marriott+Seattle+Northgate+Station&destination=Sun+Sui+Wah+Seafood+Restaurant+Richmond+BC" target="_blank">🧭 酒店 → Sun Sui Wah 导航</a>
+        <a class="navlink alt" href="https://www.cascadegatewaydata.com/Crossing/" target="_blank">边境等待时间查询 ↗</a>
+      </div>
+    </div>
+
+    <div class="slot">
+      <div class="slot-card">
+        <div class="time">10:15 – 11:45 AM</div>
+        <div class="title">🥟 早茶 · Sun Sui Wah 新瑞华（Richmond）</div>
+        <div class="desc">4940 Number 3 Rd · 周日 10am 开门 · 建议提前电话订位 <b>+1 604-273-8208</b> · 招牌乳鸽、虾饺</div>
+      </div>
+    </div>
+
+    <div class="slot">
+      <div class="slot-card">
+        <div class="time">12:30 – 3:00 PM</div>
+        <div class="title">🌲 Stanley Park</div>
+        <div class="desc">停 <b>Prospect Point 停车场</b>：观景台看狮门大桥 → Brockton Point 图腾柱 → 环海堤步行/租车骑行</div>
+        <a class="navlink" href="https://www.google.com/maps/dir/?api=1&origin=Sun+Sui+Wah+Seafood+Restaurant+Richmond+BC&destination=Prospect+Point+Stanley+Park+Vancouver" target="_blank">🧭 Sun Sui Wah → Stanley Park</a>
+      </div>
+    </div>
+
+    <div class="slot">
+      <div class="slot-card">
+        <div class="time">3:15 – 5:00 PM</div>
+        <div class="title">🛶 Granville Island</div>
+        <div class="desc">公共市场逛吃、码头看船 · 岛上有专用停车场</div>
+        <a class="navlink" href="https://www.google.com/maps/dir/?api=1&origin=Prospect+Point+Stanley+Park+Vancouver&destination=Granville+Island+Public+Market+Vancouver" target="_blank">🧭 Stanley Park → Granville Island</a>
+      </div>
+    </div>
+
+    <div class="slot">
+      <div class="slot-card">
+        <div class="time">5:00 – 6:30 PM</div>
+        <div class="title">🌅 English Bay Beach</div>
+        <div class="desc">海滩散步、Inukshuk 石像（7月日落约9pm，此站看海景即可不必等日落）</div>
+        <a class="navlink" href="https://www.google.com/maps/dir/?api=1&origin=Granville+Island+Public+Market+Vancouver&destination=English+Bay+Beach+Vancouver" target="_blank">🧭 Granville Island → English Bay</a>
+      </div>
+    </div>
+
+    <div class="slot">
+      <div class="slot-card">
+        <div class="time">7:00 – 9:00 PM</div>
+        <div class="title">🍲 晚餐 · 海底捞 Brentwood 店</div>
+        <div class="desc">Brentwood Mall 二楼 (4580 Brentwood Blvd #2220, Burnaby) · 营业至凌晨2点 · <b>建议App提前取号</b> · ⭐4.8</div>
+        <a class="navlink" href="https://www.google.com/maps/dir/?api=1&origin=English+Bay+Beach+Vancouver&destination=Haidilao+Hot+Pot+Brentwood+Burnaby" target="_blank">🧭 English Bay → 海底捞</a>
+      </div>
+    </div>
+
+    <div class="slot hotel">
+      <div class="slot-card">
+        <div class="time">~9:15 PM Check-in</div>
+        <div class="title">🏨 Element Vancouver Metrotown</div>
+        <div class="desc">5988 Willingdon Ave, Burnaby · Studio 1 King</div>
+        <a class="navlink" href="https://www.google.com/maps/dir/?api=1&origin=Haidilao+Hot+Pot+Brentwood+Burnaby&destination=Element+Vancouver+Metrotown" target="_blank">🧭 海底捞 → 酒店（~10分钟）</a>
+        <div class="ticket">
+          <div class="ticket-top">
+            <span><span class="tag hotel">Hotel</span>&nbsp; <span class="vendor">Marriott Bonvoy</span></span>
+            <a class="mng" href="https://www.marriott.com/reservation/lookupReservation.mi" target="_blank">Marriott 查看预订 ↗</a>
+          </div>
+          <div class="ticket-body">
+            <div class="kv"><div class="k">确认号</div><div class="v mono">88916379</div></div>
+            <div class="kv"><div class="k">入住/退房</div><div class="v">7/19 3pm → 7/21 12pm（2晚）</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= DAY 3 ================= -->
+<section class="day" id="d3">
+  <div class="day-head"><span class="day-num">Day 3 · Mon</span><h2>7/20 温哥华 Downtown · 不开车</h2></div>
+  <p class="day-sub">车留酒店，SkyTrain 进城。市中心自东向西一条线：Gastown → Canada Place → Coal Harbour → Robson → Davie，步行覆盖。</p>
+  <div class="tl">
+
+    <div class="slot">
+      <div class="slot-card">
+        <div class="time">9:00 AM</div>
+        <div class="title">🚇 SkyTrain：Metrotown → Waterfront（~25分钟）</div>
+        <div class="desc">Expo Line 直达 · 可用信用卡直接拍卡进站（Tap to Pay）</div>
+        <a class="navlink" href="https://www.google.com/maps/dir/?api=1&origin=Metrotown+Station+Burnaby&destination=Waterfront+Station+Vancouver&travelmode=transit" target="_blank">🧭 公交导航（SkyTrain）</a>
+      </div>
+    </div>
+
+    <div class="slot">
+      <div class="slot-card">
+        <div class="time">9:30 – 11:00 AM</div>
+        <div class="title">🕰 Gastown 蒸汽钟 · Water St 老街</div>
+        <div class="desc">从 Waterfront 站步行5分钟 · 顺路可看 Chinatown 千禧门（可选）</div>
+      </div>
+    </div>
+
+    <div class="slot">
+      <div class="slot-card">
+        <div class="time">11:00 AM – 12:15 PM</div>
+        <div class="title">⛵ Canada Place → Coal Harbour 海滨步道</div>
+        <div class="desc">五帆建筑 → 沿海边西行 → 游艇码头、水上飞机起降</div>
+      </div>
+    </div>
+
+    <div class="slot">
+      <div class="slot-card">
+        <div class="time">1:00 – 2:30 PM</div>
+        <div class="title">🍣 午餐 · Tom Sushi 海胆拌饭</div>
+        <div class="desc">1175 Davie St · 周一 12pm 开门 · ⭐4.7 · 招牌 <b>Uni Ikura Don</b> · ⚠️ 热门店常排队45–60分钟，尽量早到</div>
+        <a class="navlink" href="https://www.google.com/maps/dir/?api=1&origin=Coal+Harbour+Vancouver&destination=Tom+Sushi+1175+Davie+St+Vancouver&travelmode=walking" target="_blank">🧭 Coal Harbour → Tom Sushi（步行）</a>
+        <a class="navlink alt" href="https://www.tomsushi.ca/" target="_blank">Tom Sushi 官网 ↗</a>
+      </div>
+    </div>
+
+    <div class="slot">
+      <div class="slot-card">
+        <div class="time">2:30 – 6:00 PM</div>
+        <div class="title">🛍 Robson St 购物 · 美术馆广场</div>
+        <div class="desc">往回走方向正好顺路 · 逛累了 Burrard 或 Granville 站上车</div>
+        <a class="navlink" href="https://www.google.com/maps/dir/?api=1&origin=Robson+Street+Vancouver&destination=Metrotown+Station+Burnaby&travelmode=transit" target="_blank">🧭 回酒店（SkyTrain）</a>
+      </div>
+    </div>
+
+    <div class="slot">
+      <div class="slot-card">
+        <div class="time">晚餐</div>
+        <div class="title">🍜 Metropolis at Metrotown 商场内解决</div>
+        <div class="desc">大温最大商场就在酒店旁，中餐选择多，顺便逛逛 · <b>今晚早点休息，明早6:45出发</b></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= DAY 4 ================= -->
+<section class="day" id="d4">
+  <div class="day-head"><span class="day-num">Day 4 · Tue</span><h2>7/21 温哥华 ⛴ 维多利亚</h2></div>
+  <p class="day-sub">9点轮渡过海，下船顺路先去布查特花园，再进市区，傍晚渔人码头，晚上住Sidney（近明早出发的方向）。</p>
+  <div class="tl">
+
+    <div class="slot">
+      <div class="slot-card">
+        <div class="time">6:45 AM 退房出发</div>
+        <div class="title">🚗 前往 Tsawwassen 轮渡码头（~40分钟）</div>
+        <div class="desc">BC Ferries 要求提前60–90分钟到达check-in</div>
+        <a class="navlink" href="https://www.google.com/maps/dir/?api=1&origin=Element+Vancouver+Metrotown&destination=Tsawwassen+Ferry+Terminal" target="_blank">🧭 酒店 → Tsawwassen 码头</a>
+      </div>
+    </div>
+
+    <div class="slot ferry">
+      <div class="slot-card">
+        <div class="time">9:00 – 10:35 AM</div>
+        <div class="title">⛴ BC Ferries · Tsawwassen → Swartz Bay</div>
+        <div class="desc">Spirit of Vancouver Island 号 · 甲板看海，运气好能看到海豚</div>
+        <div class="ticket">
+          <div class="ticket-top">
+            <span><span class="tag ferry">Ferry</span>&nbsp; <span class="vendor">BC Ferries</span></span>
+            <a class="mng" href="https://www.bcferries.com/manage-booking" target="_blank">BC Ferries 管理预订 ↗</a>
+          </div>
+          <div class="ticket-body">
+            <div class="kv"><div class="k">预订号</div><div class="v mono">B265113822</div></div>
+            <div class="kv"><div class="k">车辆+乘客</div><div class="v">1车 · 2成人 · 1儿童(5-11)</div></div>
+            <div class="kv"><div class="k">已付</div><div class="v">$148.55 CAD（Prepaid）</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slot">
+      <div class="slot-card">
+        <div class="time">11:15 AM – 2:00 PM</div>
+        <div class="title">🌸 The Butchart Gardens 布查特花园</div>
+        <div class="desc">离码头仅~20分钟，顺路首站 · Sunken Garden、玫瑰园、日本园正值7月盛花期 · 园内可简单午餐 · <b>建议提前网购门票</b></div>
+        <a class="navlink" href="https://www.google.com/maps/dir/?api=1&origin=Swartz+Bay+Ferry+Terminal&destination=The+Butchart+Gardens" target="_blank">🧭 Swartz Bay → 布查特花园</a>
+        <a class="navlink alt" href="https://www.butchartgardens.com/tickets/" target="_blank">购票 ↗</a>
+      </div>
+    </div>
+
+    <div class="slot">
+      <div class="slot-card">
+        <div class="time">2:30 – 5:00 PM</div>
+        <div class="title">🏛 Inner Harbour 内港区</div>
+        <div class="desc">BC议会大厦 → Fairmont Empress 酒店外观 → 港口步道 · 市区停车楼较多</div>
+        <a class="navlink" href="https://www.google.com/maps/dir/?api=1&origin=The+Butchart+Gardens&destination=BC+Parliament+Buildings+Victoria" target="_blank">🧭 布查特花园 → 内港</a>
+      </div>
+    </div>
+
+    <div class="slot">
+      <div class="slot-card">
+        <div class="time">5:00 – 7:00 PM</div>
+        <div class="title">🦭 Fisherman's Wharf 渔人码头 + 晚餐</div>
+        <div class="desc">彩色浮屋、喂海豹 · Fish and chips 晚餐（Barb's 老字号）</div>
+        <a class="navlink" href="https://www.google.com/maps/dir/?api=1&origin=BC+Parliament+Buildings+Victoria&destination=Fisherman's+Wharf+Victoria+BC" target="_blank">🧭 内港 → 渔人码头</a>
+      </div>
+    </div>
+
+    <div class="slot hotel">
+      <div class="slot-card">
+        <div class="time">~7:30 PM Check-in</div>
+        <div class="title">🏨 TownePlace Suites Victoria Airport / Sidney</div>
+        <div class="desc">9785 Stirling Way, Sidney · Studio 2 Queen · <b>今晚早睡，明早4:45出发</b></div>
+        <a class="navlink" href="https://www.google.com/maps/dir/?api=1&origin=Fisherman's+Wharf+Victoria+BC&destination=TownePlace+Suites+Victoria+Airport+Sidney" target="_blank">🧭 渔人码头 → 酒店（~25分钟）</a>
+        <div class="ticket">
+          <div class="ticket-top">
+            <span><span class="tag hotel">Hotel</span>&nbsp; <span class="vendor">Marriott Bonvoy</span></span>
+            <a class="mng" href="https://www.marriott.com/reservation/lookupReservation.mi" target="_blank">Marriott 查看预订 ↗</a>
+          </div>
+          <div class="ticket-body">
+            <div class="kv"><div class="k">确认号</div><div class="v mono">80847829</div></div>
+            <div class="kv"><div class="k">入住/退房</div><div class="v">7/21 3pm → 7/22 11am</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= DAY 5 ================= -->
+<section class="day" id="d5">
+  <div class="day-head"><span class="day-num">Day 5 · Wed</span><h2>7/22 维多利亚 ⛴ Olympic 国家公园 → Centralia</h2></div>
+  <p class="day-sub">最早班Coho过海峡，101公路逆时针环半岛：Lake Crescent → Hoh雨林 → Ruby Beach → 南下，一条线不回头。日落约9pm，时间充裕。</p>
+  <div class="tl">
+
+    <div class="slot">
+      <div class="slot-card">
+        <div class="time">4:45 AM 出发</div>
+        <div class="title">🚗 Sidney → Victoria Black Ball 码头（~25分钟）</div>
+        <div class="desc">6:10am班次要求<b>提前60分钟</b>到达（5:10am前）· 过美国边检预检 · 提前办好退房</div>
+        <a class="navlink" href="https://www.google.com/maps/dir/?api=1&origin=TownePlace+Suites+Victoria+Airport+Sidney&destination=Black+Ball+Ferry+Line+Victoria+Terminal" target="_blank">🧭 酒店 → Coho 码头</a>
+      </div>
+    </div>
+
+    <div class="slot ferry">
+      <div class="slot-card">
+        <div class="time">6:10 – 7:40 AM</div>
+        <div class="title">⛴ MV Coho · Victoria → Port Angeles</div>
+        <div class="desc">90分钟横渡 Juan de Fuca 海峡 · 船上有咖啡店，可补觉/早餐</div>
+        <div class="ticket">
+          <div class="ticket-top">
+            <span><span class="tag ferry">Ferry</span>&nbsp; <span class="vendor">Black Ball Ferry Line (Coho)</span></span>
+            <a class="mng" href="https://www.cohoferry.com/" target="_blank">Coho Ferry 官网 ↗</a>
+          </div>
+          <div class="ticket-body">
+            <div class="kv"><div class="k">确认号</div><div class="v mono">1560056</div></div>
+            <div class="kv"><div class="k">车辆+乘客</div><div class="v">1车(≤18ft) · 3成人 · 1儿童</div></div>
+            <div class="kv"><div class="k">已付定金</div><div class="v">$12.00</div></div>
+            <div class="kv"><div class="k">码头需再付</div><div class="v"><b>$150.50 USD</b></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slot">
+      <div class="slot-card">
+        <div class="time">8:00 – 8:30 AM</div>
+        <div class="title">☕ Port Angeles 早餐 + 补给</div>
+        <div class="desc">过海关后码头旁吃早餐（Pink Pony Cafe 7am开）· <b>买好午餐三明治/干粮 + 加满油</b>（雨林一带无补给、信号弱，建议下载离线地图）</div>
+      </div>
+    </div>
+
+    <div class="slot">
+      <div class="slot-card">
+        <div class="time">9:00 – 10:00 AM</div>
+        <div class="title">🏞 Lake Crescent 新月湖</div>
+        <div class="desc">101公路边湖景 · 时间充裕可走 <b>Marymere Falls 步道</b>（往返1.5mi，~45分钟瀑布步道）· 国家公园需门票 $30/车（7日有效）</div>
+        <a class="navlink" href="https://www.google.com/maps/dir/?api=1&origin=Port+Angeles+WA&destination=Lake+Crescent+Lodge+Olympic+National+Park" target="_blank">🧭 Port Angeles → Lake Crescent</a>
+        <a class="navlink alt" href="https://www.nps.gov/olym/planyourvisit/fees.htm" target="_blank">Olympic NP 门票信息 ↗</a>
+      </div>
+    </div>
+
+    <div class="slot">
+      <div class="slot-card">
+        <div class="time">11:45 AM – 1:30 PM</div>
+        <div class="title">🌿 Hoh Rainforest 霍雨林</div>
+        <div class="desc"><b>Hall of Mosses</b> 环线（0.8mi，苔藓巨树精华）+ Spruce Nature Trail（可选）· ⚠️夏季中午停车场可能满位需排队，优先走Hall of Mosses</div>
+        <a class="navlink" href="https://www.google.com/maps/dir/?api=1&origin=Lake+Crescent+Lodge+Olympic+National+Park&destination=Hoh+Rain+Forest+Visitor+Center" target="_blank">🧭 Lake Crescent → Hoh 雨林（~1h45m）</a>
+      </div>
+    </div>
+
+    <div class="slot">
+      <div class="slot-card">
+        <div class="time">2:15 – 3:00 PM</div>
+        <div class="title">🌊 Ruby Beach 红宝石海滩</div>
+        <div class="desc">太平洋海岸线精华：海蚀柱、巨型浮木 · 就在101路边不绕路 · 可顺路快停 Kalaloch Beach / Big Cedar Tree</div>
+        <a class="navlink" href="https://www.google.com/maps/dir/?api=1&origin=Hoh+Rain+Forest+Visitor+Center&destination=Ruby+Beach+Olympic+National+Park" target="_blank">🧭 Hoh 雨林 → Ruby Beach</a>
+      </div>
+    </div>
+
+    <div class="slot hotel">
+      <div class="slot-card">
+        <div class="time">3:15 PM 出发 · ~6:30 PM Check-in</div>
+        <div class="title">🏨 Fairfield Inn & Suites Grand Mound / Centralia</div>
+        <div class="desc">走101南下经Aberdeen → Hwy 8 → I-5（~3小时）· 6223 197th Way SW, Rochester WA · 免费停车 · 当日日落~9pm，全程天亮赶路</div>
+        <a class="navlink" href="https://www.google.com/maps/dir/?api=1&origin=Ruby+Beach+Olympic+National+Park&destination=Fairfield+Inn+Suites+Grand+Mound+Centralia" target="_blank">🧭 Ruby Beach → 酒店</a>
+        <div class="ticket">
+          <div class="ticket-top">
+            <span><span class="tag hotel">Hotel</span>&nbsp; <span class="vendor">Marriott Bonvoy</span></span>
+            <a class="mng" href="https://www.marriott.com/reservation/lookupReservation.mi" target="_blank">Marriott 查看预订 ↗</a>
+          </div>
+          <div class="ticket-body">
+            <div class="kv"><div class="k">确认号</div><div class="v mono">14V8J77JSW</div></div>
+            <div class="kv"><div class="k">入住/退房</div><div class="v">7/22 3pm → 7/23 11am</div></div>
+            <div class="kv"><div class="k">房费</div><div class="v">23,000 积分（已兑）</div></div>
+            <div class="kv"><div class="k">免费取消</div><div class="v">至 7/20 6pm</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="note"><b>本日提醒：</b>① Olympic 国家公园门票 $30/车（有 America the Beautiful 年票记得带）② Forks 是雨林前最后补给点 ③ 101 西段手机信号弱，出发前下载离线地图 ④ 午餐在 Ruby Beach 野餐或车上解决。</div>
+</section>
+
+<!-- ================= DAY 6 ================= -->
+<section class="day" id="d6">
+  <div class="day-head"><span class="day-num">Day 6 · Thu</span><h2>7/23 Centralia → 波特兰</h2></div>
+  <p class="day-sub">车程仅1.5–2小时，上午从容出发。</p>
+  <div class="tl">
+    <div class="slot">
+      <div class="slot-card">
+        <div class="time">11:00 AM 前退房</div>
+        <div class="title">🚗 I-5 南下波特兰</div>
+        <div class="desc">7/23–7/26 波特兰住宿<b>尚未预订</b>，确定后补充到此处</div>
+        <a class="navlink" href="https://www.google.com/maps/dir/?api=1&origin=Fairfield+Inn+Suites+Grand+Mound+Centralia&destination=Portland+OR" target="_blank">🧭 酒店 → Portland</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= DAY 7 ================= -->
+<section class="day" id="d7">
+  <div class="day-head"><span class="day-num">Day 9 · Sun</span><h2>7/26 波特兰 → 回程</h2></div>
+  <p class="day-sub">晚上还车赶红眼航班，落地是巴尔的摩 BWI（注意不是DCA）。</p>
+  <div class="tl">
+
+    <div class="slot">
+      <div class="slot-card">
+        <div class="time">8:30 PM 前还车</div>
+        <div class="title">🚗 PDX 机场还车 · Budget</div>
+        <div class="desc">7240 NE Airport Way · 建议 7:00pm 前抵达机场区域，留足还车+值机时间</div>
+        <a class="navlink" href="https://www.google.com/maps/dir/?api=1&origin=Portland+OR&destination=Budget+Car+Rental+Portland+International+Airport" target="_blank">🧭 → PDX 还车点</a>
+      </div>
+    </div>
+
+    <div class="slot flight">
+      <div class="slot-card">
+        <div class="time">9:20 PM → 5:15 AM +1 (ET)</div>
+        <div class="title">✈ Southwest WN3194 · PDX → BWI</div>
+        <div class="desc">红眼直飞 4h55m · Basic票 · 座位值机时分配 · 每人1件登机箱+1件随身物品</div>
+        <div class="ticket">
+          <div class="ticket-top">
+            <span><span class="tag flight">Flight</span>&nbsp; <span class="vendor">Southwest Airlines</span></span>
+            <a class="mng" href="https://www.southwest.com/air/manage-reservation/" target="_blank">Southwest 管理预订 ↗</a>
+          </div>
+          <div class="ticket-body">
+            <div class="kv"><div class="k">确认码</div><div class="v mono">ASDJ9K</div></div>
+            <div class="kv"><div class="k">乘客</div><div class="v">Miao · Isaac · Youyi · Yuanyuan（4人）</div></div>
+            <div class="kv"><div class="k">已付</div><div class="v">76,000积分 + $22.40</div></div>
+            <div class="kv"><div class="k">取消政策</div><div class="v">起飞前10分钟须取消，否则作废</div></div>
+          </div>
+        </div>
+        <div class="note" style="margin-top:12px"><b>注意：</b>落地在 <b>巴尔的摩 BWI</b>（不是DCA），回家交通请预留时间；凌晨5:15到达。</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div>PNW Family Road Trip · Jul 18–26, 2026</div>
+  <div class="mono" style="margin-top:6px;opacity:.7">DL786 · B265113822 · 1560056 · WN3194 · C489254891</div>
+</footer>
+
+</body>
+</html>
